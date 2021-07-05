@@ -31,15 +31,25 @@ instance Monad Tree where
     (Leaf a) >>= f = f a
     (Node l r) >>= f = Node (l >>= f) (r >>= f)
 
---instance Functor RoseTree where
---    fmap _ RoseLeaf = RoseLeaf
---    fmap f (RoseNode n ts) = RoseNode (f a) (fmap f ts)
+instance Functor RoseTree where
+    fmap _ RoseLeaf = RoseLeaf
+    fmap f (RoseNode n ts) = RoseNode (f n) (fmap (fmap f) ts)
+instance Applicative RoseTree where
+    pure a = RoseNode a []
+    RoseLeaf <*> _ = RoseLeaf
+    (RoseNode f [ftrees]) <*> tree = undefined
+    (RoseNode f []) <*> tree = undefined
 
 instance Functor Teletype where
     fmap f (Return a) = Return (f a)
     fmap f (Put c tt) = Put c (fmap f tt)
-    fmap f (Get getch) = Get (\c -> fmap f (getch c))
+    fmap f (Get getch) = Get (fmap f . getch)
+
+instance Foldable Tree where
+    -- foldMap :: Monoid m => (a -> m) -> Tree a -> m
+    foldMap f (Leaf a) = f a
+    foldMap f (Node l r) = foldMap f l <> foldMap f r
 
 instance Traversable Tree where
     traverse modify (Leaf a) = fmap pure (modify a) -- pure = Leaf
-    traverse modify (Node l r) = 
+    traverse modify (Node l r) = undefined
