@@ -1,6 +1,6 @@
 module Main where
 
-import Lib
+import SmoothPermsSlow
 
 main :: IO ()
-main = someFunc
+main = putStrLn "Program not yet implemented"
