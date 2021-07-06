@@ -37,8 +37,8 @@ instance Functor RoseTree where
 instance Applicative RoseTree where
     pure a = RoseNode a []
     RoseLeaf <*> _ = RoseLeaf
-    (RoseNode f [ftrees]) <*> tree = undefined
-    (RoseNode f []) <*> tree = undefined
+    _ <*> RoseLeaf = RoseLeaf
+    _ <*> _ = undefined
 
 instance Functor Teletype where
     fmap f (Return a) = Return (f a)
