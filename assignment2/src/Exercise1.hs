@@ -34,8 +34,9 @@ data Expr a where
     --
     Lft :: Expr a -> Expr (Either a b)
     Rgt :: Expr b -> Expr (Either a b)
-    Eith :: (a -> c) -> (b -> c) -> Expr (Either a b) -> Expr c
-
+    -- higher order abstract syntax:
+    Eith :: (a -> Expr c) -> (b -> Expr c) -> Expr (Either a b) -> Expr c
+    -- FromLeft :: Expr a -> Expr (Either a b) -> Expr a
 
 eval :: Expr a -> a
 eval (LitI i) = i
@@ -53,7 +54,7 @@ eval (Fst eab) = fst $ eval eab
 eval (Snd eab) = snd $ eval eab
 eval (Lft ea) = Left (eval ea)
 eval (Rgt eb) = Right (eval eb)
-eval (Eith fac fbc eab) = either fac fbc (eval eab)
+eval (Eith fac fbc eab) = eval $ either fac fbc (eval eab)
 
 evalComparisonUsing :: (a -> a -> Bool) -> Expr a -> Expr a -> Bool
 evalComparisonUsing op e1 e2 = eval e1 `op` eval e2
