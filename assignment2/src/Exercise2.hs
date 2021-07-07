@@ -5,7 +5,10 @@
 {-# LANGUAGE KindSignatures #-}
 {-# LANGUAGE StandaloneKindSignatures #-}
 module Exercise2
-where
+    ( Pos(..)
+    , HList(..)
+    , lookup
+    ) where
 
 import Prelude hiding (lookup)
 

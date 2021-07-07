@@ -53,3 +53,5 @@ instance Foldable Tree where
 instance Traversable Tree where
     traverse modify (Leaf a) = fmap pure (modify a) -- pure = Leaf
     traverse modify (Node l r) = undefined
+
+teletypeexample1 = Get (\x -> if x == 'n' then Return 1 else Put 'c' (Return 0))
