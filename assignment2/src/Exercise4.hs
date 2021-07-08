@@ -29,8 +29,9 @@ eval :: Term ctx s -> HList ctx -> s
 -- Note: Pos = De Bruyn index of variable instead of variable name
 
 eval (Var idx) vars = lookup idx vars
---eval (Lam (x:ctx) func) = \x -> eval 
+eval (Lam (x:ctx) func) = \x -> eval 
 
+testInt :: Int
 testInt = eval program vars
     where
         program = Var (Pop Top)

@@ -4,7 +4,8 @@
 {-# LANGUAGE KindSignatures #-}
 {-# LANGUAGE TypeFamilies #-}
 module Exercise4(
-    module Exercise2
+    module Exercise2,
+    Zip
 )where
 
 import Prelude hiding (zip)
